@@ -1,8 +1,6 @@
 # DataAnonymizer
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/data_anonymizer`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Anonymize Data containing Personally Identifiable Information
 
 ## Installation
 
@@ -22,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+`DataAnonymizer.instance.anonymize_common_attributes(["Person", "CensusMember", "CuramUser"], ["first_name", "last_name", "ssn"])`
+
+where ["Person", "CensusMember", "CuramUser"] are the model names and ["first_name", "last_name", "ssn"] are the common attributes in these models that we want to anonymize and sync up. 
 
 ## Development
 
