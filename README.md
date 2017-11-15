@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-`DataAnonymizer.instance.anonymize_common_attributes(["Person", "CensusMember", "CuramUser"], ["first_name", "last_name", "ssn"])`
+`DataAnonymizer::Sanitize.instance.anonymize_common_attributes(["Person", "CensusMember", "CuramUser"], ["first_name", "last_name", "ssn"])`
 
 where ["Person", "CensusMember", "CuramUser"] are the model names and ["first_name", "last_name", "ssn"] are the common attributes in these models that we want to anonymize and sync up. 
 
