@@ -34,8 +34,11 @@ module DataAnonymizer
               begin
                 instance.update_attributes(attribute => encrypt_characters(cipher_hash, instance.send(attribute))) if instance.send(attribute).present?
                 updated = true
+              rescue  Mongoid::Errors::Validations => e
+                puts "     - Validation Error while updating [#{attribute}] for [#{instance.class}, ID: #{instance.id}]. Retrying with a new shuffled value...(Error Message: #{e.message})"
               rescue Exception => e
-                puts "Error updating [#{attribute}] for [#{instance.class}, ID: #{instance.id}]. Retrying with a new shuffled value.. (Error Message: #{e.message})"
+                puts "     - Failed to anonymize record [#{attribute}] for [#{instance.class}, ID: #{instance.id}] (Error Message: #{e.message})"
+                break
               end
             end
           end
@@ -71,7 +74,10 @@ module DataAnonymizer
     def encrypt_characters(cipher_hash, attribute_value)
       encrypted_value = ""
       attribute_value.gsub!(/[^0-9A-Za-z]/, '') # remove non-alphanumeric characters from string.
-      attribute_value.downcase.split('').each {|char| encrypted_value << cipher_hash[char]}
+      #attribute_value.downcase.split('').each {|char| encrypted_value << cipher_hash[char]}
+      attribute_value.downcase.split('').each do |char|
+        encrypted_value << (cipher_hash[char].present? ? cipher_hash[char] : char)
+      end
       encrypted_value
     end
 
